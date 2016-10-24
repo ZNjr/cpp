@@ -29,14 +29,14 @@ int main(){
 	 
 	    double prostokat_duzy[2][2], wylosowany_punkt[2];
 	    double ilosc_prob;
-		double punkty_trafione = 0, pole_prostokata;
+	    double punkty_trafione = 0, pole_prostokata;
 		
 		cout << "podaj wspolzedne srodka okrego" << endl << "x:"; cin >> sx;
 		cout << "podaj wspolzedne srodka okrego" << endl << ":y"; cin >> sy;
 		cout << "podaj promien okrego" << endl; cin >> promien;
-	    cout << "Podaj x i y przeciwleglych wierzcholkow prostokata" << endl <<"x1:"; cin >> prostokat_maly[0][0];
+	    	cout << "Podaj x i y przeciwleglych wierzcholkow prostokata" << endl <<"x1:"; cin >> prostokat_maly[0][0];
 		cout << "y1:"; cin >> prostokat_maly[0][1];
-    	cout << "x2:"; cin >> prostokat_maly[1][0];
+    		cout << "x2:"; cin >> prostokat_maly[1][0];
 		cout << "y2:"; cin >> prostokat_maly[1][1];
 		cout << "podaj dokladnosc obliczenia "; cin >> ilosc_prob;
 		
@@ -45,16 +45,16 @@ int main(){
 		prostokat_duzy[1][0] = max(sx + promien, prostokat_maly[1][0]);
 		prostokat_duzy[1][1] = max(sy + promien, prostokat_maly[1][1]);
 		
-         pole_prostokata = (prostokat_duzy[1][0] - prostokat_duzy[0][0]) * (prostokat_duzy[1][1]-prostokat_duzy[0][1]);
-         srand(time(NULL));
+            	pole_prostokata = (prostokat_duzy[1][0] - prostokat_duzy[0][0]) * (prostokat_duzy[1][1]-prostokat_duzy[0][1]);
+            	srand(time(NULL));
 		
 		for(int i = 0; i< ilosc_prob;i++){
 			double losowe_x = prostokat_duzy[0][0] + ((double)rand() / RAND_MAX) * (prostokat_duzy[1][0] - prostokat_duzy[0][0] );
 			double losowe_y = prostokat_duzy[0][1] + ((double)rand() / RAND_MAX) * (prostokat_duzy[1][1] - prostokat_duzy[0][1] );
 			double point[2] = {losowe_x ,losowe_y};
-		    	(czy_w_czesci_wspolnej(point)) ? punkty_trafione ++ ;
-				
-				
+		       	   if(czy_w_czesci_wspolnej(point)){
+				 	punkty_trafione ++ ;
+				}	
 			}
 	cout << "Pole wynosi: " << punkty_trafione / ilosc_prob * pole_prostokata;
 }
