@@ -38,9 +38,9 @@
 	}
   
   Matrix mnozenie(Matrix matrix){
-  	Matrix macierz = Matrix(kolumny,wiersze);
+  	Matrix macierz = Matrix(matrix.kolumny,wiersze);
 	  for(int i=0;i<wiersze;i++){
-  		for(int j=0;j<kolumny;j++){
+  		for(int j=0;j<matrix.kolumny;j++){
   			macierz.wartosci[i][j] = 0;
 			  for(int k=0;k<matrix.wiersze;k++){
   			    macierz.wartosci[i][j] += wartosci[i][k] * matrix.wartosci[k][j];
@@ -63,9 +63,9 @@
 int main(){
  	
 Matrix macierz = Matrix(8,8);
-macierz.dodawanie(macierz);
 macierz.wypisz();
-Matrix po_mnozeniu = macierz.mnozenie(macierz);
+Matrix macierz_2 = Matrix(3,3);
+Matrix po_mnozeniu = macierz.mnozenie(macierz_2);
 po_mnozeniu.wypisz();
 
  }
