@@ -2,41 +2,70 @@
 #include <cmath>
  
  using namespace std;
-
- int** dodawanie(int **matrix_1 ,int **matrix_2){
-	 int** wartosci_po_dodawaniu = new int * [sizeof(matrix_1)];
- 	  
-	    for(int i=0;i<sizeof(matrix_1);i++){
- 	   		wartosci_po_dodawaniu[i] = new int[sizeof(matrix_1)];
- 	   
-		for(int j=0;j<sizeof(matrix_1);j++){
- 	   			wartosci_po_dodawaniu[i][j] = matrix_1[i][j] + matrix_2[i][j];
-			}
-		}
- 	return wartosci_po_dodawaniu;
- }  
- void wypisz(int** matrix){
- 	for(int i=0;i<sizeof(matrix);i++){
- 	    for(int j=0;j<sizeof(matrix);j++){
-		   cout.width(8);
-		   cout << matrix[i][j];
-	      }
+ 
+ class Matrix{
+  private :
+ 	
+  void wpisz_do_tablicy(){
+	 	for(int i=0;i<wiersze;i++){
+ 		wartosci[i] = new int[kolumny];
+	 	for(int j=0;j<kolumny;j++){
+ 			wartosci[i][j] = i;
+		 }
+	 }
+}
+       
+ 	public :
+	  int kolumny;
+	  int wiersze;
+	  int** wartosci;
+   
+  	void wypisz(){
+  		for(int i=0;i<wiersze;i++){
+ 		    for(int j=0;j<kolumny;j++){
+				cout.width(5);
+				cout << wartosci[i][j];
+	 }
  	cout << endl;
    }
 }
+   	void dodawanie(Matrix matrix){
+		  for(int i=0;i<wiersze;i++){
+	    	for(int j=0;j<kolumny;j++){
+ 	   			wartosci[i][j] = wartosci[i][j] + matrix.wartosci[i][j];
+			}
+		}
+	}
+  
+  Matrix mnozenie(Matrix matrix){
+  	Matrix macierz = Matrix(kolumny,wiersze);
+	  for(int i=0;i<wiersze;i++){
+  		for(int j=0;j<kolumny;j++){
+  			macierz.wartosci[i][j] = 0;
+			  for(int k=0;k<matrix.wiersze;k++){
+  			    macierz.wartosci[i][j] += wartosci[i][k] * matrix.wartosci[k][j];
+			  }	
+		  }
+	  }
+  	return macierz;
+  }
+ 	
+	 Matrix(int ilosc_kolumn, int ilosc_wierszy):
+		kolumny(ilosc_kolumn),
+ 		wiersze(ilosc_wierszy){
+ 			kolumny = ilosc_kolumn;
+ 			wiersze = ilosc_wierszy;
+ 			wartosci = new int*[kolumny];
+		    wpisz_do_tablicy();
+	}
+ };
+ 
+int main(){
+ 	
+Matrix macierz = Matrix(8,8);
+macierz.dodawanie(macierz);
+macierz.wypisz();
+Matrix po_mnozeniu = macierz.mnozenie(macierz);
+po_mnozeniu.wypisz();
 
-//int** mnozenie(){	
-//}
- int main(){
- 	int** matrix = new int*[8];
- 	    for(int i=0;i<sizeof(matrix);i++){
- 		matrix[i] = new int[sizeof(matrix)];
-	 	    for(int j=0;j<sizeof(matrix);j++){
- 			matrix[i][j] = pow(j+1,i);
-		      }
-	 	}
-	
- int** matrix_po_dodawaniu = dodawanie(matrix,matrix);
- wypisz(matrix);
- wypisz(matrix_po_dodawaniu);	 	
  }
