@@ -10,7 +10,8 @@
 	 	for(int i=0;i<wiersze;i++){
  		wartosci[i] = new int[kolumny];
 	 	for(int j=0;j<kolumny;j++){
- 			wartosci[i][j] = i;
+ 			wartosci[i][j] = pow(j+1,i);
+		    
 		 }
 	 }
 }
@@ -29,43 +30,42 @@
  	cout << endl;
    }
 }
-   	void dodawanie(Matrix matrix){
-		  for(int i=0;i<wiersze;i++){
-	    	for(int j=0;j<kolumny;j++){
- 	   			wartosci[i][j] = wartosci[i][j] + matrix.wartosci[i][j];
-			}
-		}
+     Matrix(int ilosc_kolumn, int ilosc_wierszy):
+		kolumny(ilosc_kolumn),
+ 		wiersze(ilosc_wierszy){
+ 			kolumny = ilosc_kolumn;
+ 			wiersze = ilosc_wierszy;
+ 			wartosci = new int*[wiersze];
+		    wpisz_do_tablicy();
 	}
-  
-  Matrix mnozenie(Matrix matrix){
-  	Matrix macierz = Matrix(matrix.kolumny,wiersze);
-	  for(int i=0;i<wiersze;i++){
-  		for(int j=0;j<matrix.kolumny;j++){
+ };
+ 
+   Matrix mnozenie(Matrix matrix_1,Matrix matrix_2){
+  	Matrix macierz = Matrix(matrix_2.kolumny,matrix_1.wiersze);
+	  for(int i=0;i<matrix_1.wiersze;i++){
+  		for(int j=0;j<matrix_2.kolumny;j++){
   			macierz.wartosci[i][j] = 0;
-			  for(int k=0;k<matrix.wiersze;k++){
-  			    macierz.wartosci[i][j] += wartosci[i][k] * matrix.wartosci[k][j];
+			  for(int k=0;k<matrix_2.wiersze;k++){
+  			    macierz.wartosci[i][j] += matrix_1.wartosci[i][k] * matrix_2.wartosci[k][j];
 			  }	
 		  }
 	  }
   	return macierz;
   }
- 	
-	 Matrix(int ilosc_kolumn, int ilosc_wierszy):
-		kolumny(ilosc_kolumn),
- 		wiersze(ilosc_wierszy){
- 			kolumny = ilosc_kolumn;
- 			wiersze = ilosc_wierszy;
- 			wartosci = new int*[kolumny];
-		    wpisz_do_tablicy();
+  
+  Matrix dodawanie(Matrix matrix_1,Matrix matrix_2){
+		Matrix macierz = Matrix(matrix_2.kolumny,matrix_1.wiersze);
+		  for(int i=0;i<matrix_1.wiersze;i++){
+	    	for(int j=0;j<matrix_1.kolumny;j++){
+ 	   			macierz.wartosci[i][j] = matrix_1.wartosci[i][j] + matrix_2.wartosci[i][j];
+			}
+		}
+		return macierz;
 	}
- };
- 
+  	
 int main(){
- 	
-Matrix macierz = Matrix(8,8);
-macierz.wypisz();
+Matrix macierz = Matrix(3,5);
 Matrix macierz_2 = Matrix(3,3);
-Matrix po_mnozeniu = macierz.mnozenie(macierz_2);
+Matrix po_mnozeniu = mnozenie(macierz,macierz_2);
 po_mnozeniu.wypisz();
-
- }
+}
