@@ -1,4 +1,4 @@
-// Zbigniew Najder
+
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>
