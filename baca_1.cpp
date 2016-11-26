@@ -190,7 +190,6 @@ int main(){
 	while(dzialanie!='K'){
 		scanf("%c",&dzialanie);
 		switch(dzialanie){
-		  case 'K': break; 
 		  case 'W':
 		  table.wypisz();
 		  break;
