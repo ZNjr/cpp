@@ -1,5 +1,4 @@
 #include <iostream>
-
 using namespace std;
 
 struct Node{
@@ -18,7 +17,7 @@ void init(List *l){
 	l->ostatni=0;
 	}	
 
-Node* createNode(int nowe_dane, Node* poprzedni, Node* nastepny){
+Node* initNode(int nowe_dane, Node* poprzedni, Node* nastepny){
 	Node * nowy = new Node;
 	nowy->dane = nowe_dane;
 	nowy->n=nastepny;
@@ -26,22 +25,44 @@ Node* createNode(int nowe_dane, Node* poprzedni, Node* nastepny){
 	return nowy;
 	}
 	
-void addNode(int dane,List* list){
-	if(!list->pierwszy){
-		list->pierwszy = createNode(dane,0,0);  
-		list->ostatni = list->pierwszy;
-		}else{
-	//	Node* tmp = createNode(dane,0,list->pierwszy);
-		list->pierwszy->p = createNode(dane,0,list->pierwszy);
+inline bool pusta(List* l){
+return (l->ostatni!=0 && l->pierwszy!=0)? true:false;
+}	
+
+void dodajPierwszy(int dane,List* lista){
+	list->pierwszy = initNode(dane,0,0);  
+	list->ostatni = list->pierwszy;	
+}	
+
+void dodajNaPoczatek(int dane,List* lista){
+	if(pusta(lista)) dodajPierwszy(dane,lista);
+		else{
+		list->pierwszy->p = initNode(dane,0,list->pierwszy);
 		list->pierwszy = list->pierwszy->p;
 		}
 	}
 	
-	void zwolnij(Node* w){
-		delete w;
+void dodajNaKoniec(int dane,List* lista){
+	if(pusta(lista)) dodajPierwszy(dane,lista);
+	else{
+		list->ostatni->n=initNode(dane,list->ostatni,0);
+		list->ostatni=list->ostatni->n;
 	}
+}	
+
+void dodajNaPozycji(int index,int dane,List* lista){
+	if(index==0) dodajPierwszy(dane,lista);
+	int i=0;
+	while(i<index){
 	
-	void zwolnij(List* list){
+	i++;
+	}
+}	
+	
+void zwolnij(Node* w){
+	delete w;
+}
+   void zwolnij(List* list){
 		Node* kolejny = list->pierwszy;
 		while(kolejny){
 			Node* tmp = kolejny->n;
@@ -49,6 +70,8 @@ void addNode(int dane,List* list){
 			kolejny=tmp;
 			}
 		}
+
+
 
 void wypisz(Node *w){
 	cout<<w->dane<<" ";
@@ -64,12 +87,5 @@ void wypisz(const List* list){
 int main(){
 	List* list = new List;
 	init(list);
-	addNode(5,list);
-	addNode(6,list);
-	addNode(7,list);
-	addNode(8,list);
-	addNode(9,list);
-	addNode(10,list);
- 
 	wypisz(list);
- }
+}
