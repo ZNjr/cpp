@@ -26,42 +26,59 @@ Node* initNode(int nowe_dane, Node* poprzedni, Node* nastepny){
 	}
 	
 inline bool pusta(List* l){
-return (l->ostatni!=0 && l->pierwszy!=0)? true:false;
+return (l->ostatni==0 && l->pierwszy==0) ? true:false;
 }	
 
 void dodajPierwszy(int dane,List* lista){
-	list->pierwszy = initNode(dane,0,0);  
-	list->ostatni = list->pierwszy;	
+	lista->pierwszy = initNode(dane,0,0);  
+	lista->ostatni = lista->pierwszy;	
 }	
 
-void dodajNaPoczatek(int dane,List* lista){
+void dodajNaPoczatek(List* lista, int dane){
 	if(pusta(lista)) dodajPierwszy(dane,lista);
 		else{
-		list->pierwszy->p = initNode(dane,0,list->pierwszy);
-		list->pierwszy = list->pierwszy->p;
+		lista->pierwszy->p = initNode(dane,0,lista->pierwszy);
+		lista->pierwszy = lista->pierwszy->p;
 		}
 	}
 	
 void dodajNaKoniec(int dane,List* lista){
 	if(pusta(lista)) dodajPierwszy(dane,lista);
 	else{
-		list->ostatni->n=initNode(dane,list->ostatni,0);
-		list->ostatni=list->ostatni->n;
+		lista->ostatni->n=initNode(dane,lista->ostatni,0);
+		lista->ostatni=lista->ostatni->n;
 	}
 }	
-
+Node* adresElementu(List* lista,int x){
+	Node* element = lista->pierwszy;
+		int i=0;
+		while(i<x-1){
+			element = element->n; 
+			i++;
+		}
+		return element;
+	}
 void dodajNaPozycji(int index,int dane,List* lista){
 	if(index==0) dodajPierwszy(dane,lista);
-	int i=0;
-	while(i<index){
-	
-	i++;
-	}
+	Node * el = adresElementu(lista,index);
+	Node * tmp = el->n;
+	el->n = initNode(dane,el,tmp);
+	tmp->p = el;
 }	
-	
 void zwolnij(Node* w){
 	delete w;
 }
+
+void usun(int index,List* lista){
+	Node* el = adresElementu(lista,index)->n;
+	Node* nastepny = el->n;
+	Node* poprzedni = el->p;
+	poprzedni->n = nastepny;
+	nastepny->p = poprzedni;
+	zwolnij(el);
+  }
+	
+
    void zwolnij(List* list){
 		Node* kolejny = list->pierwszy;
 		while(kolejny){
@@ -70,8 +87,6 @@ void zwolnij(Node* w){
 			kolejny=tmp;
 			}
 		}
-
-
 
 void wypisz(Node *w){
 	cout<<w->dane<<" ";
@@ -83,9 +98,42 @@ void wypisz(const List* list){
 		wypisz(kolejny);
 		kolejny=kolejny->n;
 		}
+		cout<<endl;
 	}	
+void wypiszOd(int x,List* list){
+	Node * kolejny = adresElementu(list,x);
+	while(kolejny){
+		wypisz(kolejny);
+		kolejny=kolejny->n;
+		}
+		cout<<endl;
+	
+	}
+void wypiszDo(int x,List* list){
+	Node* element = list->pierwszy;
+		int i=0;
+		while(i<x){
+			wypisz(element);
+			element = element->n; 
+			i++;
+		}
+	cout<<endl;
+	}
+		
 int main(){
 	List* list = new List;
 	init(list);
+	dodajNaPoczatek(list,10);
+	dodajNaPoczatek(list,20);
+	dodajNaPoczatek(list,30);
+	dodajNaPoczatek(list,40);
+	dodajNaPoczatek(list,50);
+	dodajNaPoczatek(list,60);
+	dodajNaPoczatek(list,70);
+	dodajNaPozycji(2,99,list);
 	wypisz(list);
+	usun(2,list);
+	wypisz(list);
+	wypiszDo(4,list);
+	wypiszOd(4,list);
 }
