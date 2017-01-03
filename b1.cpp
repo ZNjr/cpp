@@ -4,17 +4,18 @@
 class Node{
 	public:
 	Uczestnik* uczestnik;
-	Node* next;
-	Node* previous;
+	Node* lewy;
+	Node* prawy;
 	int id;
 	bool ma_chusteczke = false;
-	Node(Uczestnik* uczestnik, Node* next,Node* previous, int id): 
+	Node(Uczestnik* uczestnik, Node* lewy,Node* prawy, int id): 
 		uczestnik(uczestnik),
-		next(next),
-		previous(previous),
+		lewy(lewy),
+		prawy(prawy),
 		id(id){}
-	Node(Node* next,Node* previous, int id):next(next),
-		previous(previous),
+	Node(Node* lewy,Node* prawy, int id):
+		lewy(lewy),
+		prawy(prawy),
 		id(id){}
 };
 
@@ -34,8 +35,8 @@ class Wodzirej:public Node{
 		if(kolko_puste()){
 			 nastepne_id++;
 			 Node* node = new Node(osoba,this,this,nastepne_id);
-			 next = node;
-			 previous = node;
+			 lewy = node;
+			 prawy = node;
 			 return nastepne_id; 
 			 }
 		if(jest_w_kolku(osoba) or osoba == 0 or (osoba->plec != Uczestnik::K and osoba->plec != Uczestnik::M)) return 0;
@@ -46,14 +47,14 @@ class Wodzirej:public Node{
 	}
 	private:
 		bool jest_w_kolku(Uczestnik* osoba){
-		   Node* nastepny = this->next;
+		   Node* nastepny = this->prawy;
 		   while(nastepny->id!=0||nastepny!=0){
 		   		if(nastepny->uczestnik==uczestnik) return true;
 		   }
 			return false;
 		}
 	inline bool kolko_puste(){
-			return (next==0 && previous == 0)? true:false;
+			return (prawy == 0 && lewy == 0)? true:false;
 		}
 };
 
