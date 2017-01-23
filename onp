@@ -1,0 +1,30 @@
+#include <iostream>
+#include <string>
+#include <stack>
+
+using namespace std;
+
+bool liczba(char s){
+		int tmp = (int)s;
+		return (tmp>47 && tmp<58) || (tmp>96 && tmp < 123);
+	}
+
+int main(){
+	stack <string> stos;
+	string wyrazenie;
+	cin>>wyrazenie;
+	int nawias = (int)')';
+	unsigned int i=0;
+	while(wyrazenie[i]!=0){
+		if(!liczba(wyrazenie[i])){
+				if((int)wyrazenie[i]!=nawias){
+				string tmp;
+				tmp.push_back(wyrazenie[i]);
+				stos.push(tmp);
+				cout<<stos.top();
+				stos.pop();  
+				}
+			} 	
+		i++;
+	   }
+	}
