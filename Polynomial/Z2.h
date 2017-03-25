@@ -1,4 +1,4 @@
-//Zbigniew Najder
+
 #ifndef Z2_H
 #define Z2_H
 
