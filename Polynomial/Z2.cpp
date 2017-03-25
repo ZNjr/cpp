@@ -1,4 +1,4 @@
-//Zbigniew Najder
+
 #include "Z2.h"
 
 Z2::Z2():liczba(0) {}
