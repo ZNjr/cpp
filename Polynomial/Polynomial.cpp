@@ -1,4 +1,4 @@
-//Zbigniew Najder
+
 #include "Polynomial.h"
 #define BITS_IN_CHAR 8
 
